@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.1.5] — 2026-04-17
+
+### Added
+- **Overlay LoL-aware** : la fenêtre overlay s'affiche uniquement quand LoL a le focus. Switch vers une autre app (browser, Discord, etc.) → overlay se cache automatiquement.
+- Poll toutes les 400ms via `active-win-pos-rs` côté Rust.
+
+### Changed
+- **Tailles** : fonts du micro overlay augmentées (top 17px, gold 40px, obj 24px, alert 15px)
+- **Arrondi** : timers en secondes entières, gold diff sans décimales
+- **Fenêtre overlay** : 380×300 (était 300×240)
+
 ## [v0.1.4] — 2026-04-17
 
 ### Fixed

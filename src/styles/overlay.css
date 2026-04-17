@@ -517,7 +517,7 @@ html.micro-window #root {
   background: transparent !important;
   padding: 0 !important;
 }
-html.micro-window body { padding: 4px !important; }
+html.micro-window body { padding: 6px !important; }
 
 .micro-window .app-micro { max-width: none; }
 
@@ -526,12 +526,13 @@ html.micro-window body { padding: 4px !important; }
   border: none;
   color: #000;
   text-shadow:
-    -1px -1px 0 #fff,
-     1px -1px 0 #fff,
-    -1px  1px 0 #fff,
-     1px  1px 0 #fff,
-     0    0   3px #fff;
-  font-weight: 700;
+    -1.5px -1.5px 0 #fff,
+     1.5px -1.5px 0 #fff,
+    -1.5px  1.5px 0 #fff,
+     1.5px  1.5px 0 #fff,
+     0     0    4px #fff;
+  font-weight: 800;
+  gap: 10px;
 }
 .micro-window .micro-top,
 .micro-window .micro-big-gold,
@@ -540,7 +541,17 @@ html.micro-window body { padding: 4px !important; }
   background: transparent;
   border-color: transparent;
 }
-.micro-window .micro-top       { border-bottom-color: rgba(0,0,0,0.25); }
+.micro-window .micro-top {
+  font-size: 17px;
+  border-bottom-color: rgba(0,0,0,0.35);
+  padding-bottom: 8px;
+}
+.micro-window .micro-big-label { font-size: 13px; letter-spacing: 2px; }
+.micro-window .micro-big-val   { font-size: 40px; line-height: 1; }
+.micro-window .micro-obj-name  { font-size: 16px; letter-spacing: 2px; }
+.micro-window .micro-obj-time  { font-size: 24px; }
+.micro-window .micro-alert     { font-size: 15px; padding: 5px 8px; font-weight: 800; }
+
 .micro-window .micro-time,
 .micro-window .micro-gold,
 .micro-window .micro-hp.ok,

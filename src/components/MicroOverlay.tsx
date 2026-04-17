@@ -35,7 +35,7 @@ export function MicroOverlay({ data }: Props) {
       <div className={`micro-big-gold ${gold.diff > 0 ? 'pos' : gold.diff < 0 ? 'neg' : ''}`}>
         <span className="micro-big-label">ITEMS</span>
         <span className="micro-big-val">
-          {gold.diff > 0 ? '+' : ''}{(gold.diff / 1000).toFixed(1)}k
+          {gold.diff > 0 ? '+' : ''}{Math.round(gold.diff)}
         </span>
       </div>
 
