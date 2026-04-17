@@ -22,10 +22,14 @@ function isMicroWindow(): boolean {
   return params.get('view') === 'micro';
 }
 
+function isTauriApp(): boolean {
+  return typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
+}
+
 export function App() {
   const [data, setData] = useState<AllGameData | null>(null);
   const [state, setState] = useState<ConnectionState>('no-game');
-  const [mockMode, setMockMode] = useState<boolean>(true);
+  const [mockMode, setMockMode] = useState<boolean>(() => !isTauriApp());
   const [view, setView] = useState<ViewMode>(initialView);
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ kind: 'idle' });
   const locked = isMicroWindow();
