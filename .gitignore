@@ -7,3 +7,4 @@ dist/
 .env.*
 !.env.example
 image\ app*.PNG
+tsconfig.tsbuildinfo
