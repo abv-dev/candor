@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Coach LoL Live",
-  "version": "0.3.0",
+  "productName": "Candor",
+  "version": "0.4.0",
   "identifier": "com.abv.coachlollive",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Coach LoL Live",
+        "title": "Candor — Coach LoL",
         "width": 1280,
         "height": 880,
         "minWidth": 720,
@@ -24,7 +24,7 @@
       },
       {
         "label": "overlay",
-        "title": "Coach Overlay",
+        "title": "Candor Overlay",
         "url": "index.html?view=micro",
         "width": 380,
         "height": 300,
@@ -57,8 +57,8 @@
     ],
     "category": "Utility",
     "copyright": "© 2026 abv-dev",
-    "shortDescription": "Overlay factuel pour League of Legends",
-    "longDescription": "Dashboard et overlay affichant les données temps réel du Live Client API de League of Legends, sans interprétation, sans IA.",
+    "shortDescription": "Candor — coach LoL factuel sans invention",
+    "longDescription": "Candor est un dashboard et overlay affichant les données temps réel du Live Client API de League of Legends, sans interprétation, sans IA.",
     "createUpdaterArtifacts": true
   },
   "plugins": {
@@ -67,6 +67,7 @@
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDEzMkYyMDhCOTIxQzA5NEUKUldST0NSeVNpeUF2RTVBSWoxYnpUUW5nViswMjM4VlZ6T09tQ1hWTXNZMitESmZTUDdLS0cySloK",
       "endpoints": [
+        "https://github.com/abv-dev/candor/releases/latest/download/latest.json",
         "https://github.com/abv-dev/coach-lol-live/releases/latest/download/latest.json"
       ]
     }

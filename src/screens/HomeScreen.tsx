@@ -19,9 +19,9 @@ export function HomeScreen({ onDone, version }: Props) {
     <div className="screen-home">
       <div className="home-halo" />
       <div className="home-inner">
-        <img src={logo} alt="Coach LoL Live" className="home-logo-big" />
+        <img src={logo} alt="Candor" className="home-logo-big" />
         <h1 className="home-brand">
-          COACH<span className="accent-gold">LOL</span>LIVE
+          CAN<span className="accent-gold">DOR</span>
         </h1>
         <p className="home-sub">{t('home.subtitle')}</p>
         <div className="home-version">v{version}</div>

@@ -1,12 +1,12 @@
 [package]
-name = "coach-lol-live"
+name = "candor"
 version = "0.1.0"
-description = "Coach LoL Live — overlay factuel temps réel"
+description = "Candor — coach LoL factuel sans invention"
 authors = ["abv-dev"]
 edition = "2021"
 
 [lib]
-name = "coach_lol_live_lib"
+name = "candor_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

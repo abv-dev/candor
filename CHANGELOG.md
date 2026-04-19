@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.4.0] — 2026-04-19
+
+### Renamed
+- **Coach LoL Live → Candor** (honnêteté, franchise — colle à la philo "zéro invention")
+- Repo GitHub : `abv-dev/coach-lol-live` → `abv-dev/candor`
+- Site : `abv-dev.github.io/candor/`
+- `productName: Candor` dans le bundle Windows
+- Cargo package + lib renamed (`candor` / `candor_lib`)
+- Identifier conservé (`com.abv.coachlollive`) pour que les v0.3.0 installées s'upgradent sans désinstallation
+- Updater endpoints : nouveau URL en priorité + ancien en fallback
+
 ## [v0.3.0] — 2026-04-19
 
 ### Added

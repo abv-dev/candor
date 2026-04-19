@@ -1,4 +1,4 @@
-# Coach LoL Live
+# Candor
 
 Dashboard + overlay factuel temps réel pour League of Legends.
 
@@ -49,8 +49,8 @@ Redémarre le terminal après l'install de Rust.
 ### Clone + install
 
 ```powershell
-git clone git@github.com:abv-dev/coach-lol-live.git
-cd coach-lol-live
+git clone git@github.com:abv-dev/candor.git
+cd candor
 npm install
 ```
 
@@ -106,7 +106,7 @@ download + install + restart (toutes les étapes automatiques)
 
 | Secret | Valeur |
 |---|---|
-| `TAURI_SIGNING_PRIVATE_KEY` | contenu de `~/.tauri/coach-lol-live.key` (base64) |
+| `TAURI_SIGNING_PRIVATE_KEY` | contenu de `~/.tauri/coach-lol-live.key` (signature key conservée, on n'en change pas — les updates restent signées par la même clé) (base64) |
 | `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | vide (pas de password) |
 
 **2. Repo public** — les releases sont accessibles à l'URL `releases/latest/download/...` sans auth. Pour que l'auto-update marche sans token embarqué, **le repo doit être public**. (Le code n'a aucun secret — les clés sont dans ton home + GitHub secrets.)

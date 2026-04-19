@@ -35,9 +35,9 @@ export function GameHeader({
   return (
     <header className="gh">
       <div className="gh-left">
-        <img src={logo} alt="Coach LoL Live" className="gh-logo" />
+        <img src={logo} alt="Candor" className="gh-logo" />
         <div className="gh-brand">
-          <div className="gh-title">COACH<span className="gh-accent">LOL</span>LIVE</div>
+          <div className="gh-title">CAN<span className="gh-accent">DOR</span></div>
           <div className="gh-tagline">{t('home.subtitle')}</div>
         </div>
       </div>
