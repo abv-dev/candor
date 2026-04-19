@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.5.0] — 2026-04-19
+
+### Changed
+- **Nouveau logo Candor** : "C" gold sculpté 3D sur fond dark rounded-square, accents bleu néon, rayons lumineux. Style premium tech-luxe.
+- Icônes Tauri (32/128/256) + logo in-app + logo site mis à jour
+
 ## [v0.4.2] — 2026-04-19
 
 ### Fixed
