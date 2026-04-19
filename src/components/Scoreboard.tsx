@@ -6,7 +6,7 @@ interface Props {
   activePlayerName: string;
 }
 
-export function BroadcastScoreboard({ aggs, activePlayerName }: Props) {
+export function Scoreboard({ aggs, activePlayerName }: Props) {
   const orderAgg = aggs.myTeamId === 'ORDER' ? aggs.myTeam : aggs.enemyTeam;
   const chaosAgg = aggs.myTeamId === 'CHAOS' ? aggs.myTeam : aggs.enemyTeam;
 

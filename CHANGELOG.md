@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.4.1] — 2026-04-19
+
+### Added
+- **Raccourci bureau** créé automatiquement à l'install (via fragment WiX custom)
+
 ## [v0.4.0] — 2026-04-19
 
 ### Renamed
@@ -109,7 +114,7 @@ Version initiale.
 ### Added
 - Frontend React 18 + Vite + TypeScript
 - Backend Tauri 2 (Rust) avec 2 fenêtres : main + overlay transparent
-- Dashboard broadcast OTP-style : scoreboard 5v5, guide joueur, live feed events
+- Dashboard esports : scoreboard 5v5, guide joueur, live feed events
 - Micro overlay always-on-top 300×240 avec 5-6 infos clés
 - Live Client Data API via Rust command `fetch_live_game_data` (bypass cert self-signed)
 - Images champions/items depuis Data Dragon CDN officiel

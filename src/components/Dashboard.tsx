@@ -3,7 +3,7 @@ import { aggregateGame } from '../logic/playerStats';
 import { computeObjectives } from '../logic/objectiveTimer';
 import { computeAlerts } from '../logic/alertEngine';
 import { recentEvents } from '../logic/eventHistory';
-import { BroadcastScoreboard } from './BroadcastScoreboard';
+import { Scoreboard } from './Scoreboard';
 import { PlayerGuide } from './PlayerGuide';
 import { ObjectiveBar } from './ObjectiveBar';
 import { LiveFeed } from './LiveFeed';
@@ -29,7 +29,7 @@ export function Dashboard({ data }: Props) {
 
       <ObjectiveBar timers={timers} />
 
-      <BroadcastScoreboard aggs={aggs} activePlayerName={data.activePlayer.summonerName} />
+      <Scoreboard aggs={aggs} activePlayerName={data.activePlayer.summonerName} />
 
       <PlayerGuide data={data} />
 

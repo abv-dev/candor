@@ -6,7 +6,7 @@ Dashboard + overlay factuel temps réel pour League of Legends.
 
 ## Deux vues
 
-- **Dashboard** — fenêtre plein écran avec scoreboard broadcast (OTP-style), guide joueur centré sur toi, live feed events.
+- **Dashboard** — fenêtre plein écran avec scoreboard esports 5v5, guide joueur centré sur toi, live feed events.
 - **Micro overlay** — fenêtre transparente always-on-top (~300×240) avec 5-6 infos clés, posée dans un coin de l'écran pendant que tu joues.
 
 ## Stack
@@ -134,7 +134,7 @@ src/
   components/
     Dashboard.tsx         # vue plein écran (scoreboard + guide + events)
     MicroOverlay.tsx      # vue compacte in-game
-    BroadcastScoreboard.tsx
+    Scoreboard.tsx
     TeamPanel.tsx
     PlayerCard.tsx
     PlayerGuide.tsx       # section centrée sur le joueur actif
