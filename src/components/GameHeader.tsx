@@ -1,5 +1,6 @@
 import type { ConnectionState } from '../services/liveClient';
 import logo from '../assets/logo.png';
+import { useT } from '../i18n';
 
 interface Props {
   gameTime: number;
@@ -8,6 +9,8 @@ interface Props {
   onToggleMock: () => void;
   view: 'dashboard' | 'micro';
   onToggleView: () => void;
+  onOpenSettings?: () => void;
+  settingsActive?: boolean;
 }
 
 function fmt(seconds: number): string {
@@ -17,14 +20,25 @@ function fmt(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export function GameHeader({ gameTime, state, mockMode, onToggleMock, view, onToggleView }: Props) {
+export function GameHeader({
+  gameTime,
+  state,
+  mockMode,
+  onToggleMock,
+  view,
+  onToggleView,
+  onOpenSettings,
+  settingsActive,
+}: Props) {
+  const t = useT();
+
   return (
     <header className="gh">
       <div className="gh-left">
         <img src={logo} alt="Coach LoL Live" className="gh-logo" />
         <div className="gh-brand">
           <div className="gh-title">COACH<span className="gh-accent">LOL</span>LIVE</div>
-          <div className="gh-tagline">Dashboard factuel temps réel</div>
+          <div className="gh-tagline">{t('home.subtitle')}</div>
         </div>
       </div>
       <div className="gh-center">
@@ -36,11 +50,20 @@ export function GameHeader({ gameTime, state, mockMode, onToggleMock, view, onTo
       </div>
       <div className="gh-right">
         <button className={`gh-btn ${view === 'dashboard' ? 'active' : ''}`} onClick={onToggleView}>
-          {view === 'dashboard' ? '→ MICRO' : '→ DASHBOARD'}
+          {view === 'dashboard' ? '→ ' + t('nav.micro').toUpperCase() : '→ ' + t('nav.dashboard').toUpperCase()}
         </button>
         <button className="gh-btn" onClick={onToggleMock}>
           {mockMode ? 'LIVE' : 'MOCK'}
         </button>
+        {onOpenSettings && (
+          <button
+            className={`gh-btn gh-btn-icon ${settingsActive ? 'active' : ''}`}
+            onClick={onOpenSettings}
+            title={t('nav.settings')}
+          >
+            ⚙
+          </button>
+        )}
       </div>
     </header>
   );

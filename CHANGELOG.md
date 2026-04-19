@@ -1,5 +1,26 @@
 # Changelog
 
+## [v0.3.0] — 2026-04-19
+
+### Added
+- **i18n FR/EN** dans l'app (module `src/i18n`) avec détection auto + persistance
+- **Home screen** : splash 1.8s au démarrage (logo animé + gradient halo + loader)
+- **Waiting screen** : animation d'orbes bleu/or/rouge + 12 tips LoL qui tournent toutes les 6s
+- **Settings screen** complète :
+  - Toggle rappels audio globaux
+  - Toggle par objectif (Drake, Baron, Herald, Grubs)
+  - Slider volume + bouton Test
+  - Switch langue FR/EN
+  - Mode démo toggle
+  - Section À propos (version)
+- **Bouton ⚙️ settings** dans le GameHeader
+
+### Changed
+- Routing entre écrans : home → (waiting | game) ↔ settings
+- Audio config persisté en localStorage
+- Textes de l'interface bilingues
+- Supprimé AudioToggle (intégré dans Settings)
+
 ## [v0.2.1] — 2026-04-19
 
 ### Added

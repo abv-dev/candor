@@ -8,7 +8,6 @@ import { PlayerGuide } from './PlayerGuide';
 import { ObjectiveBar } from './ObjectiveBar';
 import { LiveFeed } from './LiveFeed';
 import { AlertList } from './AlertList';
-import { AudioToggle } from './AudioToggle';
 
 interface Props {
   data: AllGameData;
@@ -22,14 +21,11 @@ export function Dashboard({ data }: Props) {
 
   return (
     <div className="dash">
-      <div className="dash-topbar">
-        {alerts.length > 0 ? (
-          <div className="dash-alerts">
-            <AlertList alerts={alerts} />
-          </div>
-        ) : <div />}
-        <AudioToggle />
-      </div>
+      {alerts.length > 0 && (
+        <div className="dash-alerts">
+          <AlertList alerts={alerts} />
+        </div>
+      )}
 
       <ObjectiveBar timers={timers} />
 

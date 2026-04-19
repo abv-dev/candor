@@ -7,15 +7,14 @@ import { Dashboard } from './components/Dashboard';
 import { MicroOverlay } from './components/MicroOverlay';
 import { GameHeader } from './components/GameHeader';
 import { UpdateBanner } from './components/UpdateBanner';
+import { HomeScreen } from './screens/HomeScreen';
+import { WaitingScreen } from './screens/WaitingScreen';
+import { SettingsScreen } from './screens/SettingsScreen';
 
 const POLL_INTERVAL_MS = 1000;
+const APP_VERSION = '0.3.0';
 type ViewMode = 'dashboard' | 'micro';
-
-function initialView(): ViewMode {
-  if (typeof window === 'undefined') return 'dashboard';
-  const params = new URLSearchParams(window.location.search);
-  return params.get('view') === 'micro' ? 'micro' : 'dashboard';
-}
+type Screen = 'home' | 'waiting' | 'game' | 'settings';
 
 function isMicroWindow(): boolean {
   if (typeof window === 'undefined') return false;
@@ -31,15 +30,28 @@ export function App() {
   const [data, setData] = useState<AllGameData | null>(null);
   const [state, setState] = useState<ConnectionState>('no-game');
   const [mockMode, setMockMode] = useState<boolean>(() => !isTauriApp());
-  const [view, setView] = useState<ViewMode>(initialView);
+  const [view, setView] = useState<ViewMode>('dashboard');
+  const [screen, setScreen] = useState<Screen>('home');
+  const [prevScreen, setPrevScreen] = useState<Screen>('waiting');
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ kind: 'idle' });
   const locked = isMicroWindow();
 
   useEffect(() => {
-    if (!locked) {
-      checkAndApplyUpdate(setUpdateStatus);
-    }
+    if (!locked) checkAndApplyUpdate(setUpdateStatus);
   }, [locked]);
+
+  useEffect(() => {
+    if (screen === 'home') {
+      const id = setTimeout(() => setScreen(data ? 'game' : 'waiting'), 1800);
+      return () => clearTimeout(id);
+    }
+  }, [screen, data]);
+
+  useEffect(() => {
+    if (screen === 'home' || screen === 'settings') return;
+    const next: Screen = data ? 'game' : 'waiting';
+    if (screen !== next) setScreen(next);
+  }, [data, screen]);
 
   useEffect(() => {
     let cancelled = false;
@@ -51,9 +63,7 @@ export function App() {
       if (cancelled) return;
       setState(res.state);
       setData(res.data);
-      if (res.data && !locked) {
-        checkAudioAlerts(res.data);
-      }
+      if (res.data && !locked) checkAudioAlerts(res.data);
     }
 
     tick();
@@ -71,22 +81,91 @@ export function App() {
     setView((v) => (v === 'dashboard' ? 'micro' : 'dashboard'));
   }
 
+  function openSettings() {
+    if (screen === 'settings') return;
+    setPrevScreen(screen);
+    setScreen('settings');
+  }
+
+  function closeSettings() {
+    const target = data ? 'game' : 'waiting';
+    setScreen(prevScreen === 'home' ? target : prevScreen);
+  }
+
   const gameTime = data?.gameData.gameTime ?? 0;
 
-  if (locked || view === 'micro') {
+  // Micro overlay window (Tauri 2nd window): simpler render
+  if (locked) {
+    return (
+      <div className="app app-micro micro-locked">
+        {data ? <MicroOverlay data={data} /> : null}
+      </div>
+    );
+  }
+
+  if (screen === 'home') {
+    return (
+      <div className="app app-screen">
+        <HomeScreen onDone={() => setScreen(data ? 'game' : 'waiting')} version={APP_VERSION} />
+      </div>
+    );
+  }
+
+  if (screen === 'settings') {
+    return (
+      <div className="app app-dashboard">
+        <GameHeader
+          gameTime={gameTime}
+          state={state}
+          mockMode={mockMode}
+          onToggleMock={toggleMock}
+          view={view}
+          onToggleView={toggleView}
+          onOpenSettings={closeSettings}
+          settingsActive
+        />
+        <SettingsScreen
+          onBack={closeSettings}
+          mockMode={mockMode}
+          onToggleMock={toggleMock}
+          version={APP_VERSION}
+        />
+      </div>
+    );
+  }
+
+  if (screen === 'waiting') {
+    return (
+      <div className="app app-screen">
+        <GameHeader
+          gameTime={0}
+          state={state}
+          mockMode={mockMode}
+          onToggleMock={toggleMock}
+          view={view}
+          onToggleView={toggleView}
+          onOpenSettings={openSettings}
+        />
+        <UpdateBanner status={updateStatus} />
+        <WaitingScreen mockMode={mockMode} onToggleMock={toggleMock} />
+      </div>
+    );
+  }
+
+  // screen === 'game'
+  if (view === 'micro') {
     return (
       <div className="app app-micro">
-        {!locked && (
-          <GameHeader
-            gameTime={gameTime}
-            state={state}
-            mockMode={mockMode}
-            onToggleMock={toggleMock}
-            view={view}
-            onToggleView={toggleView}
-          />
-        )}
-        {data ? <MicroOverlay data={data} /> : <EmptyState mockMode={mockMode} />}
+        <GameHeader
+          gameTime={gameTime}
+          state={state}
+          mockMode={mockMode}
+          onToggleMock={toggleMock}
+          view={view}
+          onToggleView={toggleView}
+          onOpenSettings={openSettings}
+        />
+        {data && <MicroOverlay data={data} />}
       </div>
     );
   }
@@ -100,18 +179,10 @@ export function App() {
         onToggleMock={toggleMock}
         view={view}
         onToggleView={toggleView}
+        onOpenSettings={openSettings}
       />
       <UpdateBanner status={updateStatus} />
-      {data ? <Dashboard data={data} /> : <EmptyState mockMode={mockMode} />}
-    </div>
-  );
-}
-
-function EmptyState({ mockMode }: { mockMode: boolean }) {
-  return (
-    <div className="empty">
-      <p>En attente d'une game…</p>
-      {!mockMode && <p className="hint">Lance une partie LoL ou active le mode MOCK.</p>}
+      {data && <Dashboard data={data} />}
     </div>
   );
 }
