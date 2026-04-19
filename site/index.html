@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coach LoL Live — Dashboard & overlay factuel pour League of Legends</title>
+  <meta name="description" content="Overlay et dashboard temps réel pour LoL. Gold, KDA, timers objectifs, rappels audio. Zéro IA, zéro interprétation. Gratuit, open source, auto-update." />
+  <meta property="og:title" content="Coach LoL Live" />
+  <meta property="og:description" content="Dashboard & overlay factuel pour League of Legends. Zéro IA. 100% faits observables." />
+  <meta property="og:image" content="assets/logo.png" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Oxanium:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-brand" href="#">
+      <img src="assets/logo.png" alt="Coach LoL Live" class="nav-logo" />
+      <div class="nav-title-wrap">
+        <span class="nav-title">COACH<span class="accent">LOL</span>LIVE</span>
+        <span class="nav-tagline">Dashboard factuel temps réel</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">Comment ça marche</a>
+      <a href="#download">Télécharger</a>
+      <a href="https://github.com/abv-dev/coach-lol-live" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-inner">
+        <div class="hero-badge">
+          <span class="dot"></span> v0.2.1 · Open Source · Gratuit
+        </div>
+        <h1 class="hero-title">
+          Le coach LoL<br />
+          <span class="accent-gold">qui ne t'invente rien.</span>
+        </h1>
+        <p class="hero-sub">
+          Dashboard broadcast + overlay transparent qui lit ta game en direct.
+          <strong>Zéro IA, zéro recommandation bidon.</strong>
+          100% des faits, affichés pour que TU décides.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://github.com/abv-dev/coach-lol-live/releases/latest/download/Coach.LoL.Live_0.2.1_x64_en-US.msi">
+            <span class="btn-icon">⬇</span>
+            Télécharger pour Windows
+            <span class="btn-meta">64-bit · ~8 Mo</span>
+          </a>
+          <a class="btn btn-secondary" href="#features">Voir les features →</a>
+        </div>
+        <div class="hero-trust">
+          ✓ Auto-update signé &nbsp;·&nbsp;
+          ✓ API officielle Riot &nbsp;·&nbsp;
+          ✓ Sans clé API &nbsp;·&nbsp;
+          ✓ Compatible tous les comptes
+        </div>
+      </div>
+      <div class="hero-preview">
+        <img src="assets/dashboard-mockup.png" alt="Aperçu du dashboard" class="preview-dashboard" />
+        <img src="assets/overlay-mockup.png" alt="Aperçu de l'overlay in-game" class="preview-overlay" />
+      </div>
+    </section>
+
+    <section class="section features" id="features">
+      <div class="section-label">FEATURES</div>
+      <h2 class="section-title">Deux vues, une philosophie</h2>
+
+      <div class="feature-grid">
+        <article class="feature">
+          <div class="feature-icon">📊</div>
+          <h3>Dashboard broadcast</h3>
+          <p>Scoreboard OTP-style 5v5. Gold items, KDA, CS, niveaux, timers objectifs, events live, guide joueur centré sur toi.</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon">🎯</div>
+          <h3>Overlay transparent in-game</h3>
+          <p>Fenêtre always-on-top qui s'affiche uniquement quand LoL a le focus. Texte noir haut-contraste sur fond transparent.</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon">🔊</div>
+          <h3>Rappels audio</h3>
+          <p>Synthèse vocale fr-FR : Drake, Baron, Herald, Ancestral Grubs. Annoncés à 30s du spawn et au spawn.</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon">🤝</div>
+          <h3>Pour tous les joueurs</h3>
+          <p>Utilise le Live Client Data API local de LoL — aucune clé à configurer, aucun compte à lier. Installe et c'est bon.</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon">🔄</div>
+          <h3>Mises à jour auto</h3>
+          <p>L'app check GitHub au lancement, télécharge et installe les nouvelles versions toute seule. Signature minisign vérifiée.</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon">🚫</div>
+          <h3>Zéro invention</h3>
+          <p>Pas de LLM qui hallucine, pas de builds hardcodés obsolètes. Gold, items, timers — tout vient de l'API officielle Riot.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section how" id="how">
+      <div class="section-label">COMMENT ÇA MARCHE</div>
+      <h2 class="section-title">3 étapes. 2 minutes.</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Télécharge le <code>.msi</code></h3>
+          <p>8 Mo, signé, passe par GitHub Releases. Windows 10/11 compatible.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Double-click, Install</h3>
+          <p>Next → Install. L'app apparaît dans ton menu démarrer.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Lance LoL & joue</h3>
+          <p>Mode "Borderless" pour que l'overlay apparaisse. Tout se connecte auto.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section principle">
+      <div class="principle-inner">
+        <div class="principle-label">PHILOSOPHIE</div>
+        <h2 class="principle-title">Tu gardes ton cerveau.<br />L'app libère tes yeux.</h2>
+        <p class="principle-text">
+          En game, ton attention est limitée. Coach LoL Live ne te dit jamais
+          <em>"fight"</em> ou <em>"back"</em> — ces décisions dépendent de ton champion, ton matchup,
+          tes cooldowns. Ce que l'app fait : elle te montre les faits
+          (gold des 10 joueurs, respawns, timers, events) pour que ton cerveau
+          ait toutes les infos sans avoir à surveiller 5 choses en même temps.
+        </p>
+        <p class="principle-text-small">
+          Pas de "coaching IA" qui invente. Pas de builds écrits en dur qui deviennent
+          faux au patch suivant. Juste l'API officielle de Riot + des règles simples.
+        </p>
+      </div>
+    </section>
+
+    <section class="section download" id="download">
+      <div class="download-inner">
+        <div class="section-label">TÉLÉCHARGEMENT</div>
+        <h2 class="section-title">Prêt à jouer ?</h2>
+        <div class="download-card">
+          <div class="download-meta">
+            <span class="download-version">v0.2.1</span>
+            <span class="download-platform">Windows 10/11 · x64</span>
+            <span class="download-size">~8 Mo</span>
+          </div>
+          <a class="btn btn-primary btn-xl" href="https://github.com/abv-dev/coach-lol-live/releases/latest/download/Coach.LoL.Live_0.2.1_x64_en-US.msi">
+            ⬇ Télécharger Coach LoL Live
+          </a>
+          <div class="download-links">
+            <a href="https://github.com/abv-dev/coach-lol-live/releases/latest" target="_blank" rel="noopener">Toutes les versions</a>
+            <a href="https://github.com/abv-dev/coach-lol-live/blob/master/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a>
+            <a href="https://github.com/abv-dev/coach-lol-live/issues" target="_blank" rel="noopener">Signaler un bug</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-left">
+      <img src="assets/logo.png" alt="Coach LoL Live" class="footer-logo" />
+      <div>
+        <div class="footer-title">COACH<span class="accent">LOL</span>LIVE</div>
+        <div class="footer-tagline">Open source · MIT-like · Sans pub, sans tracking</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="https://github.com/abv-dev/coach-lol-live" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/abv-dev/coach-lol-live/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/abv-dev/coach-lol-live/blob/master/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a>
+    </div>
+    <div class="footer-disclaimer">
+      Coach LoL Live n'est ni affilié ni approuvé par Riot Games.
+      League of Legends et tous les assets Riot associés sont la propriété de Riot Games, Inc.
+    </div>
+  </footer>
+</body>
+</html>
