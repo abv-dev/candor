@@ -7,12 +7,13 @@ import { Dashboard } from './components/Dashboard';
 import { MicroOverlay } from './components/MicroOverlay';
 import { GameHeader } from './components/GameHeader';
 import { UpdateBanner } from './components/UpdateBanner';
+import { FitToViewport } from './components/FitToViewport';
 import { HomeScreen } from './screens/HomeScreen';
 import { WaitingScreen } from './screens/WaitingScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 
 const POLL_INTERVAL_MS = 1000;
-const APP_VERSION = '0.5.0';
+const APP_VERSION = '0.5.1';
 type ViewMode = 'dashboard' | 'micro';
 type Screen = 'home' | 'waiting' | 'game' | 'settings';
 
@@ -105,15 +106,15 @@ export function App() {
 
   if (screen === 'home') {
     return (
-      <div className="app app-screen">
+      <FitToViewport className="app app-screen">
         <HomeScreen onDone={() => setScreen(data ? 'game' : 'waiting')} version={APP_VERSION} />
-      </div>
+      </FitToViewport>
     );
   }
 
   if (screen === 'settings') {
     return (
-      <div className="app app-dashboard">
+      <FitToViewport className="app app-dashboard">
         <GameHeader
           gameTime={gameTime}
           state={state}
@@ -130,13 +131,13 @@ export function App() {
           onToggleMock={toggleMock}
           version={APP_VERSION}
         />
-      </div>
+      </FitToViewport>
     );
   }
 
   if (screen === 'waiting') {
     return (
-      <div className="app app-screen">
+      <FitToViewport className="app app-screen">
         <GameHeader
           gameTime={0}
           state={state}
@@ -148,7 +149,7 @@ export function App() {
         />
         <UpdateBanner status={updateStatus} />
         <WaitingScreen mockMode={mockMode} onToggleMock={toggleMock} />
-      </div>
+      </FitToViewport>
     );
   }
 
@@ -171,7 +172,7 @@ export function App() {
   }
 
   return (
-    <div className="app app-dashboard">
+    <FitToViewport className="app app-dashboard">
       <GameHeader
         gameTime={gameTime}
         state={state}
@@ -183,6 +184,6 @@ export function App() {
       />
       <UpdateBanner status={updateStatus} />
       {data && <Dashboard data={data} />}
-    </div>
+    </FitToViewport>
   );
 }

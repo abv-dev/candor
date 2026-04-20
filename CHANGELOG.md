@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.5.1] — 2026-04-20
+
+### Added
+- **Flèches par lane** : chaque PlayerCard affiche un indicateur ▲/▼ gold/grisé comparant la valeur d'items au direct opposant (TOP vs TOP, JG vs JG, …). Tooltip = diff exact.
+- **Scale-to-fit automatique** : le dashboard se redimensionne pour tenir dans la fenêtre, peu importe la taille d'écran. Plus de scroll forcé.
+
+### Site
+- Launcher Vercel : https://candorlol.vercel.app — URL courte, bouton download fetche l'API GitHub pour toujours pointer vers la dernière release.
+
 ## [v0.5.0] — 2026-04-19
 
 ### Changed

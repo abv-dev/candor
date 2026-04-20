@@ -39,8 +39,8 @@ export function Scoreboard({ aggs, activePlayerName }: Props) {
         </div>
       </div>
       <div className="sb-teams">
-        <TeamPanel teamId="ORDER" agg={orderAgg} activePlayerName={activePlayerName} />
-        <TeamPanel teamId="CHAOS" agg={chaosAgg} activePlayerName={activePlayerName} reverse />
+        <TeamPanel teamId="ORDER" agg={orderAgg} opposingAgg={chaosAgg} activePlayerName={activePlayerName} />
+        <TeamPanel teamId="CHAOS" agg={chaosAgg} opposingAgg={orderAgg} activePlayerName={activePlayerName} reverse />
       </div>
     </div>
   );

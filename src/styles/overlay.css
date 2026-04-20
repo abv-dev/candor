@@ -436,8 +436,11 @@ html.micro-window body { padding: 4px !important; overflow: hidden !important; m
 }
 
 .pc-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.pc-worth { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--gold); }
+.pc-worth { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--gold); display: inline-flex; align-items: center; gap: 4px; }
 .pc-items-count { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+.pc-lane-arrow { font-size: 10px; line-height: 1; filter: drop-shadow(0 0 3px currentColor); }
+.pc-lane-arrow.ahead { color: var(--gold); }
+.pc-lane-arrow.behind { color: var(--muted); opacity: 0.7; }
 
 /* ---------- GUIDE ---------- */
 .guide {

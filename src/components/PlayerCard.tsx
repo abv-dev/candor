@@ -6,6 +6,7 @@ import { countCompletedItems } from '../logic/itemProgress';
 
 interface Props {
   player: AllPlayer;
+  opponent?: AllPlayer | null;
   highlight?: boolean;
   reverse?: boolean;
 }
@@ -21,11 +22,14 @@ function shortPosition(pos: string): string {
   }
 }
 
-export function PlayerCard({ player, highlight, reverse }: Props) {
+export function PlayerCard({ player, opponent, highlight, reverse }: Props) {
   const kda = `${player.scores.kills}/${player.scores.deaths}/${player.scores.assists}`;
   const itemsValue = playerItemsValue(player);
   const completed = countCompletedItems(player);
   const itemSlots = [...player.items].sort((a, b) => a.slot - b.slot);
+
+  const laneDiff = opponent ? itemsValue - playerItemsValue(opponent) : 0;
+  const laneLeading = opponent && Math.abs(laneDiff) >= 100 ? (laneDiff > 0 ? 'ahead' : 'behind') : null;
 
   return (
     <div className={`player-card ${reverse ? 'reverse' : ''} ${highlight ? 'highlight' : ''} team-${player.team.toLowerCase()}`}>
@@ -56,7 +60,14 @@ export function PlayerCard({ player, highlight, reverse }: Props) {
         </div>
       </div>
       <div className="pc-right">
-        <div className="pc-worth">{(itemsValue / 1000).toFixed(1)}k</div>
+        <div className="pc-worth">
+          {laneLeading && (
+            <span className={`pc-lane-arrow ${laneLeading}`} title={`${laneDiff > 0 ? '+' : ''}${Math.round(laneDiff)} gold vs lane`}>
+              {laneLeading === 'ahead' ? '▲' : '▼'}
+            </span>
+          )}
+          {(itemsValue / 1000).toFixed(1)}k
+        </div>
         <div className="pc-items-count">{completed}/6</div>
       </div>
     </div>
