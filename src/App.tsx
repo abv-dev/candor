@@ -13,7 +13,7 @@ import { WaitingScreen } from './screens/WaitingScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 
 const POLL_INTERVAL_MS = 1000;
-const APP_VERSION = '0.5.7';
+const APP_VERSION = '0.5.8';
 type ViewMode = 'dashboard' | 'micro';
 type Screen = 'home' | 'waiting' | 'game' | 'settings';
 
@@ -48,6 +48,10 @@ export function App() {
       invoke('set_overlay_visible', { visible: !!data }).catch(() => {});
     });
   }, [data, locked]);
+
+  useEffect(() => {
+    if (!data) resetAudioAlerts();
+  }, [data]);
 
   useEffect(() => {
     if (screen === 'home' || screen === 'settings') return;

@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.5.8] — 2026-04-22
+
+### Added
+- **Rappel de despawn** Grubs (13:00) et Héraut (19:00) : annonce vocale une minute avant qu'ils disparaissent, pour que tu n'oublies pas un objectif prévu. Le rappel Héraut est sauté si il a déjà été kill.
+- **Annonce des kills d'objectifs** : quand une équipe tue drake/baron/héraut/grubs, annonce "L'équipe bleue/rouge a tué [objectif]" (FR) / "Blue/Red team killed [target]" (EN). Pour le drake, l'élément est inclus ("le drake infernal", etc.).
+
+### Fixed
+- Les annonces de kill et despawn ne rejouent plus les événements historiques si Candor est lancé après le début d'une partie (premier tick = pas d'annonce, on juste mémorise ce qui est déjà passé).
+- Le set de déclenchements audio est reset proprement à la fin de chaque partie pour que la partie suivante ne soit pas polluée par les EventID précédents.
+
 ## [v0.5.7] — 2026-04-22
 
 ### Added

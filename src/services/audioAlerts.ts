@@ -5,6 +5,7 @@ import { getAudioConfig } from './audioConfig';
 import { getLang } from '../i18n';
 
 const triggered = new Set<string>();
+let hasRunOnce = false;
 
 type ObjKey = 'drake' | 'baron' | 'herald' | 'grubs';
 
@@ -42,20 +43,49 @@ const phrases: Record<Lang, {
   up: (name: string) => string;
   soul: (type: string, team: string) => string;
   soulPredict: (type: string) => string;
+  despawnSoon: (name: string) => string;
+  killed: (target: string, team: string) => string;
 }> = {
   fr: {
     soon: (n) => `${n} dans 30 secondes`,
     up: (n) => `${n} disponible`,
     soul: (t, team) => `Âme ${t} pour l'équipe ${team}`,
     soulPredict: (t) => `Soul ${t} en jeu`,
+    despawnSoon: (n) => `${n} disparaît dans une minute`,
+    killed: (target, team) => `L'équipe ${team} a tué ${target}`,
   },
   en: {
     soon: (n) => `${n} in 30 seconds`,
     up: (n) => `${n} available`,
     soul: (t, team) => `${t} soul secured by ${team} team`,
     soulPredict: (t) => `${t} soul incoming`,
+    despawnSoon: (n) => `${n} disappears in one minute`,
+    killed: (target, team) => `${team} team killed ${target}`,
   },
 };
+
+const GRUBS_DESPAWN_AT = 14 * 60;
+const HERALD_DESPAWN_AT = 20 * 60;
+
+interface KillTarget {
+  eventName: string;
+  key: ObjKey;
+  targetLabel: (lang: Lang, dragonType?: string) => string;
+}
+
+const KILL_TARGETS: KillTarget[] = [
+  {
+    eventName: 'DragonKill',
+    key: 'drake',
+    targetLabel: (lang, type) => {
+      if (type && soulTypes[lang][type]) return lang === 'fr' ? `le drake ${soulTypes[lang][type]}` : `the ${soulTypes[lang][type]} drake`;
+      return lang === 'fr' ? 'le drake' : 'the drake';
+    },
+  },
+  { eventName: 'BaronKill',  key: 'baron',  targetLabel: (lang) => (lang === 'fr' ? 'le Baron' : 'Baron') },
+  { eventName: 'HeraldKill', key: 'herald', targetLabel: (lang) => (lang === 'fr' ? 'le Héraut' : 'Herald') },
+  { eventName: 'HordeKill',  key: 'grubs',  targetLabel: (lang) => (lang === 'fr' ? 'les Grubs' : 'the Grubs') },
+];
 
 export function speak(text: string, opts?: { test?: boolean }): void {
   const config = getAudioConfig();
@@ -84,6 +114,7 @@ export function testAudio(): void {
 
 export function resetAudioAlerts(): void {
   triggered.clear();
+  hasRunOnce = false;
 }
 
 export function checkAudioAlerts(data: AllGameData): void {
@@ -148,4 +179,56 @@ export function checkAudioAlerts(data: AllGameData): void {
       }
     }
   }
+
+  // Despawn warnings — 1 min before objectives despawn, skipped if already killed
+  if (config.grubs) {
+    const grubsKilled = data.events.Events.some((e) => e.EventName === 'HordeKill');
+    if (!grubsKilled) {
+      const remaining = GRUBS_DESPAWN_AT - now;
+      if (remaining <= 60 && remaining > 55) {
+        const id = 'grubs-despawn-warn';
+        if (!triggered.has(id)) {
+          triggered.add(id);
+          speak(ph.despawnSoon(names[lang].grubs));
+        }
+      }
+    }
+  }
+  if (config.herald) {
+    const heraldKilled = data.events.Events.some((e) => e.EventName === 'HeraldKill');
+    if (!heraldKilled) {
+      const remaining = HERALD_DESPAWN_AT - now;
+      if (remaining <= 60 && remaining > 55) {
+        const id = 'herald-despawn-warn';
+        if (!triggered.has(id)) {
+          triggered.add(id);
+          speak(ph.despawnSoon(names[lang].herald));
+        }
+      }
+    }
+  }
+
+  // Kill announcements — "Team X killed Y"
+  const playerTeam = new Map<string, Team>();
+  for (const p of data.allPlayers) playerTeam.set(p.summonerName, p.team);
+
+  for (const e of data.events.Events) {
+    const target = KILL_TARGETS.find((t) => t.eventName === e.EventName);
+    if (!target) continue;
+    if (!config[target.key]) continue;
+
+    const id = `kill-${e.EventID}`;
+    if (triggered.has(id)) continue;
+    triggered.add(id);
+
+    if (!hasRunOnce) continue; // skip historical events on first tick (app restart mid-game)
+
+    const team = e.KillerName ? playerTeam.get(e.KillerName) : undefined;
+    if (!team) continue;
+
+    const label = target.targetLabel(lang, e.DragonType);
+    speak(ph.killed(label, teamNames[lang][team]));
+  }
+
+  hasRunOnce = true;
 }
