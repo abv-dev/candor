@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { AllGameData } from './types/liveClient';
 import { fetchLiveData, fetchMockData, resetMock, type ConnectionState } from './services/liveClient';
 import { checkAndApplyUpdate, type UpdateStatus } from './services/updater';
@@ -11,11 +11,12 @@ import { FitToViewport } from './components/FitToViewport';
 import { HomeScreen } from './screens/HomeScreen';
 import { WaitingScreen } from './screens/WaitingScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
+import { EndGameScreen } from './screens/EndGameScreen';
 
 const POLL_INTERVAL_MS = 1000;
-const APP_VERSION = '0.5.8';
+const APP_VERSION = '0.5.9';
 type ViewMode = 'dashboard' | 'micro';
-type Screen = 'home' | 'waiting' | 'game' | 'settings';
+type Screen = 'home' | 'waiting' | 'game' | 'settings' | 'end';
 
 function isMicroWindow(): boolean {
   if (typeof window === 'undefined') return false;
@@ -35,6 +36,8 @@ export function App() {
   const [screen, setScreen] = useState<Screen>('home');
   const [prevScreen, setPrevScreen] = useState<Screen>('waiting');
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ kind: 'idle' });
+  const [endedGameData, setEndedGameData] = useState<AllGameData | null>(null);
+  const prevDataRef = useRef<AllGameData | null>(null);
   const locked = isMicroWindow();
 
   useEffect(() => {
@@ -54,10 +57,19 @@ export function App() {
   }, [data]);
 
   useEffect(() => {
-    if (screen === 'home' || screen === 'settings') return;
+    const prev = prevDataRef.current;
+    prevDataRef.current = data;
+
+    if (prev && !data && !mockMode && screen !== 'home' && screen !== 'settings') {
+      setEndedGameData(prev);
+      setScreen('end');
+      return;
+    }
+
+    if (screen === 'home' || screen === 'settings' || screen === 'end') return;
     const next: Screen = data ? 'game' : 'waiting';
     if (screen !== next) setScreen(next);
-  }, [data, screen]);
+  }, [data, screen, mockMode]);
 
   useEffect(() => {
     let cancelled = false;
@@ -82,7 +94,13 @@ export function App() {
       resetMock();
       setMockMode(false);
     }
+    setEndedGameData(null);
     setScreen(data ? 'game' : 'waiting');
+  }
+
+  function backToHomeFromEnd() {
+    setEndedGameData(null);
+    setScreen('home');
   }
 
   function launchDemo() {
@@ -127,6 +145,22 @@ export function App() {
     return (
       <div className="app app-screen">
         <HomeScreen onStart={startFromHome} onDemo={launchDemo} version={APP_VERSION} />
+      </div>
+    );
+  }
+
+  if (screen === 'end' && endedGameData) {
+    return (
+      <div className="app app-screen">
+        <GameHeader
+          gameTime={endedGameData.gameData.gameTime}
+          state={state}
+          mockMode={mockMode}
+          view={view}
+          onToggleView={toggleView}
+          onOpenSettings={openSettings}
+        />
+        <EndGameScreen data={endedGameData} onBackHome={backToHomeFromEnd} />
       </div>
     );
   }

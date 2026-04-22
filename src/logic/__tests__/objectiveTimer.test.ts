@@ -48,4 +48,45 @@ describe('computeObjectives', () => {
     const obj = computeObjectives(data);
     expect(obj.primary.name).toBe('Drake');
   });
+
+  it('baron buff actif pendant 3 min après kill', () => {
+    let data = makeGameData();
+    data = withEvents(data, [{ EventID: 1, EventName: 'BaronKill', EventTime: 1300, KillerName: 'JgAlly' }]);
+    data = { ...data, gameData: { ...data.gameData, gameTime: 1400 } };
+    const obj = computeObjectives(data);
+    expect(obj.baronBuffRemaining).toBe(80); // 1300 + 180 - 1400
+    expect(obj.baronBuffTeam).toBe('ORDER');
+  });
+
+  it('baron buff null une fois expiré', () => {
+    let data = makeGameData();
+    data = withEvents(data, [{ EventID: 1, EventName: 'BaronKill', EventTime: 1300, KillerName: 'JgAlly' }]);
+    data = { ...data, gameData: { ...data.gameData, gameTime: 1600 } };
+    const obj = computeObjectives(data);
+    expect(obj.baronBuffRemaining).toBeNull();
+  });
+
+  it('elder timer activé après soul claim', () => {
+    let data = makeGameData();
+    data = withEvents(data, [
+      { EventID: 1, EventName: 'DragonKill', EventTime: 300,  KillerName: 'JgAlly', DragonType: 'Infernal' },
+      { EventID: 2, EventName: 'DragonKill', EventTime: 700,  KillerName: 'JgAlly', DragonType: 'Ocean' },
+      { EventID: 3, EventName: 'DragonKill', EventTime: 1100, KillerName: 'JgAlly', DragonType: 'Cloud' },
+      { EventID: 4, EventName: 'DragonKill', EventTime: 1500, KillerName: 'JgAlly', DragonType: 'Mountain' },
+    ]);
+    data = { ...data, gameData: { ...data.gameData, gameTime: 1600 } };
+    const obj = computeObjectives(data);
+    // soul à 1500, Elder à 1500 + 360 = 1860, reste 260
+    expect(obj.elderAt).toBe(1860);
+    expect(obj.elderIn).toBe(260);
+  });
+
+  it('elder timer null tant que soul pas claim', () => {
+    let data = makeGameData();
+    data = withEvents(data, [
+      { EventID: 1, EventName: 'DragonKill', EventTime: 300, KillerName: 'JgAlly', DragonType: 'Infernal' },
+    ]);
+    const obj = computeObjectives(data);
+    expect(obj.elderIn).toBeNull();
+  });
 });

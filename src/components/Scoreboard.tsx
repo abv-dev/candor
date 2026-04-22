@@ -1,12 +1,16 @@
+import type { AllGameData } from '../types/liveClient';
 import type { GameAggregates } from '../logic/playerStats';
+import { computeDragonState } from '../logic/dragonSoul';
+import { computeTurretState } from '../logic/turretState';
 import { TeamPanel } from './TeamPanel';
 
 interface Props {
   aggs: GameAggregates;
+  data: AllGameData;
   activePlayerName: string;
 }
 
-export function Scoreboard({ aggs, activePlayerName }: Props) {
+export function Scoreboard({ aggs, data, activePlayerName }: Props) {
   const orderAgg = aggs.myTeamId === 'ORDER' ? aggs.myTeam : aggs.enemyTeam;
   const chaosAgg = aggs.myTeamId === 'CHAOS' ? aggs.myTeam : aggs.enemyTeam;
 
@@ -15,12 +19,19 @@ export function Scoreboard({ aggs, activePlayerName }: Props) {
     gapDiff === 0 ? null : gapDiff > 0 ? 'ORDER' : 'CHAOS';
   const gapAbs = Math.abs(gapDiff);
 
+  const dragons = computeDragonState(data);
+  const turrets = computeTurretState(data);
+
   return (
     <div className="scoreboard">
       <div className="sb-banner">
         <div className={`sb-side sb-order ${leadingTeam === 'ORDER' ? 'leading' : ''}`}>
           <div className="sb-team-label">BLEU</div>
           <div className="sb-kda">{orderAgg.kills}</div>
+          <div className="sb-side-meta">
+            <span title="Drakes tués">🐉 {dragons.orderKills}/4</span>
+            <span title="Tours détruites côté adverse">🗼 {turrets.chaos.destroyed}/11</span>
+          </div>
         </div>
         <div className="sb-center">
           <div className="sb-gap-label">
@@ -36,6 +47,10 @@ export function Scoreboard({ aggs, activePlayerName }: Props) {
         <div className={`sb-side sb-chaos ${leadingTeam === 'CHAOS' ? 'leading' : ''}`}>
           <div className="sb-team-label">ROUGE</div>
           <div className="sb-kda">{chaosAgg.kills}</div>
+          <div className="sb-side-meta">
+            <span title="Drakes tués">🐉 {dragons.chaosKills}/4</span>
+            <span title="Tours détruites côté adverse">🗼 {turrets.order.destroyed}/11</span>
+          </div>
         </div>
       </div>
       <div className="sb-teams">

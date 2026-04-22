@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.5.9] — 2026-04-22
+
+### Added
+- **Stacks drake par équipe** affichés sur la bannière du scoreboard (🐉 X/4 pour chaque team).
+- **Tours détruites** côté adverse affichées sur la bannière (🗼 X/11).
+- **Elder Dragon** : timer ajouté à l'ObjectiveBar dès qu'une équipe a sécurisé sa soul. Respawn 6 min après le kill précédent de l'Elder.
+- **Baron buff** : timer ajouté à l'ObjectiveBar pendant les 3 min qui suivent un BaronKill, avec indicateur visuel de l'équipe qui a le buff.
+- **Gold par minute** par team dans le header TeamPanel (items value / min, basé sur gameTime).
+- **Summoner spells** du joueur actif et de son adversaire direct affichés dans le PlayerGuide.
+- **Écran fin de partie** : quand la game se termine (hors mode démo), un résumé s'affiche avec durée, KDA, items, CS, stacks drake, tours perdues, soul secured. Bouton "Retour à l'accueil" pour relancer.
+
 ## [v0.5.8] — 2026-04-22
 
 ### Added

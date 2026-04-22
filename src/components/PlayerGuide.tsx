@@ -44,6 +44,10 @@ export function PlayerGuide({ data }: Props) {
             <div className="gv-head">
               <div className="gv-name">{matchup.me.championName}</div>
               <div className="gv-meta">lvl {matchup.me.level} · {matchup.me.position}</div>
+              <div className="gv-spells">
+                <span>{matchup.me.summonerSpells.summonerSpellOne.displayName}</span>
+                <span>{matchup.me.summonerSpells.summonerSpellTwo.displayName}</span>
+              </div>
             </div>
             <div className="gv-kda">{matchup.me.scores.kills}/{matchup.me.scores.deaths}/{matchup.me.scores.assists}</div>
           </div>
@@ -78,6 +82,10 @@ export function PlayerGuide({ data }: Props) {
             <div className="gv-head">
               <div className="gv-name">{matchup.opponent.championName}</div>
               <div className="gv-meta">lvl {matchup.opponent.level} · {matchup.opponent.position}</div>
+              <div className="gv-spells">
+                <span>{matchup.opponent.summonerSpells.summonerSpellOne.displayName}</span>
+                <span>{matchup.opponent.summonerSpells.summonerSpellTwo.displayName}</span>
+              </div>
             </div>
             <div className="gv-kda">{matchup.opponent.scores.kills}/{matchup.opponent.scores.deaths}/{matchup.opponent.scores.assists}</div>
           </div>

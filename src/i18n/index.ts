@@ -24,6 +24,11 @@ const dictionaries: Record<Lang, Record<string, string>> = {
     'home.philo.body': 'Candor te donne les faits. Tu décides. Pas de LLM, pas de "tier list", pas de build hardcodé.',
     'home.quit_demo': 'Quitter la démo',
 
+    'end.title': 'Partie terminée',
+    'end.soul': 'Soul sécurisée',
+    'end.back': "Retour à l'accueil",
+    'end.note': "Résumé basé sur le dernier snapshot avant la fin de la game.",
+
     'waiting.title': 'En attente d\'une partie',
     'waiting.subtitle': 'Lance une game de LoL et l\'app se connecte automatiquement',
 
@@ -81,6 +86,11 @@ const dictionaries: Record<Lang, Record<string, string>> = {
     'home.philo.title': 'The philosophy',
     'home.philo.body': 'Candor gives you the facts. You decide. No LLM, no tier list, no hardcoded build.',
     'home.quit_demo': 'Quit demo',
+
+    'end.title': 'Game over',
+    'end.soul': 'Soul secured',
+    'end.back': 'Back home',
+    'end.note': 'Summary from the last snapshot before the game ended.',
 
     'waiting.title': 'Waiting for a game',
     'waiting.subtitle': 'Start a LoL game and the app will connect automatically',

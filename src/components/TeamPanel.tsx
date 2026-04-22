@@ -32,6 +32,12 @@ export function TeamPanel({ teamId, agg, opposingAgg, activePlayerName, reverse 
           <span className="t-kda">{agg.kills}/{agg.deaths}/{agg.assists}</span>
           <span className="t-sep">·</span>
           <span className="t-gold">{(agg.itemsValue / 1000).toFixed(1)}k</span>
+          {agg.goldPerMin > 0 && (
+            <>
+              <span className="t-sep">·</span>
+              <span className="t-gpm" title="Items value / min">{Math.round(agg.goldPerMin)} g/m</span>
+            </>
+          )}
           <span className="t-sep">·</span>
           <span className="t-cs">{agg.cs} CS</span>
         </div>

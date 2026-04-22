@@ -29,7 +29,7 @@ export function Dashboard({ data }: Props) {
 
       <ObjectiveBar timers={timers} />
 
-      <Scoreboard aggs={aggs} activePlayerName={data.activePlayer.summonerName} />
+      <Scoreboard aggs={aggs} data={data} activePlayerName={data.activePlayer.summonerName} />
 
       <PlayerGuide data={data} />
 
