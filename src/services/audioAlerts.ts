@@ -41,16 +41,19 @@ const phrases: Record<Lang, {
   soon: (name: string) => string;
   up: (name: string) => string;
   soul: (type: string, team: string) => string;
+  soulPredict: (type: string) => string;
 }> = {
   fr: {
     soon: (n) => `${n} dans 30 secondes`,
     up: (n) => `${n} disponible`,
     soul: (t, team) => `Âme ${t} pour l'équipe ${team}`,
+    soulPredict: (t) => `Soul ${t} en jeu`,
   },
   en: {
     soon: (n) => `${n} in 30 seconds`,
     up: (n) => `${n} available`,
     soul: (t, team) => `${t} soul secured by ${team} team`,
+    soulPredict: (t) => `${t} soul incoming`,
   },
 };
 
@@ -123,11 +126,21 @@ export function checkAudioAlerts(data: AllGameData): void {
     }
   }
 
-  // Dragon soul — announced once per game when a team secures 4 drakes
+  // Dragon soul — prediction after 2 drakes killed, then claim when a team reaches 4
   if (config.drake) {
     const soul = computeDragonState(data);
+
+    if (soul.predictedSoulType) {
+      const id = `soul-predict-${soul.predictedSoulType}`;
+      if (!triggered.has(id)) {
+        triggered.add(id);
+        const typeLabel = soulTypes[lang][soul.predictedSoulType] ?? soul.predictedSoulType;
+        speak(ph.soulPredict(typeLabel));
+      }
+    }
+
     if (soul.soulTeam && soul.soulType) {
-      const id = `soul-${soul.soulTeam}-${soul.soulType}`;
+      const id = `soul-claim-${soul.soulTeam}-${soul.soulType}`;
       if (!triggered.has(id)) {
         triggered.add(id);
         const typeLabel = soulTypes[lang][soul.soulType] ?? soul.soulType;

@@ -43,4 +43,33 @@ describe('computeDragonState', () => {
     expect(state.orderKills).toBe(0);
     expect(state.chaosKills).toBe(0);
   });
+
+  it('predicts soul type from mapTerrain once totalKills >= 2', () => {
+    let data = withEvents(makeGameData(), [
+      { EventID: 1, EventName: 'DragonKill', EventTime: 300, KillerName: 'JgAlly', DragonType: 'Infernal' },
+      { EventID: 2, EventName: 'DragonKill', EventTime: 700, KillerName: 'JgEnemy', DragonType: 'Ocean' },
+    ]);
+    data = { ...data, gameData: { ...data.gameData, mapTerrain: 'Hextech' } };
+    const state = computeDragonState(data);
+    expect(state.totalKills).toBe(2);
+    expect(state.predictedSoulType).toBe('Hextech');
+  });
+
+  it('does not predict while mapTerrain is Default', () => {
+    const data = withEvents(makeGameData(), [
+      { EventID: 1, EventName: 'DragonKill', EventTime: 300, KillerName: 'JgAlly', DragonType: 'Infernal' },
+      { EventID: 2, EventName: 'DragonKill', EventTime: 700, KillerName: 'JgEnemy', DragonType: 'Ocean' },
+    ]);
+    const state = computeDragonState(data);
+    expect(state.predictedSoulType).toBeNull();
+  });
+
+  it('does not predict before 2 kills', () => {
+    let data = withEvents(makeGameData(), [
+      { EventID: 1, EventName: 'DragonKill', EventTime: 300, KillerName: 'JgAlly', DragonType: 'Infernal' },
+    ]);
+    data = { ...data, gameData: { ...data.gameData, mapTerrain: 'Hextech' } };
+    const state = computeDragonState(data);
+    expect(state.predictedSoulType).toBeNull();
+  });
 });

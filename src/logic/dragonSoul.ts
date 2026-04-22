@@ -1,10 +1,14 @@
 import type { AllGameData, Team } from '../types/liveClient';
 
+const VALID_ELEMENTS = new Set(['Infernal', 'Ocean', 'Cloud', 'Mountain', 'Hextech', 'Chemtech']);
+
 export interface DragonState {
   orderKills: number;
   chaosKills: number;
+  totalKills: number;
   soulTeam: Team | null;
   soulType: string | null;
+  predictedSoulType: string | null;
 }
 
 export function computeDragonState(data: AllGameData): DragonState {
@@ -31,5 +35,16 @@ export function computeDragonState(data: AllGameData): DragonState {
     }
   }
 
-  return { orderKills, chaosKills, soulTeam, soulType };
+  const totalKills = orderKills + chaosKills;
+
+  // Après 2 drakes killed, le rift révèle l'élément de la soul via mapTerrain.
+  let predictedSoulType: string | null = null;
+  if (totalKills >= 2) {
+    const terrain = data.gameData.mapTerrain;
+    if (terrain && VALID_ELEMENTS.has(terrain)) {
+      predictedSoulType = terrain;
+    }
+  }
+
+  return { orderKills, chaosKills, totalKills, soulTeam, soulType, predictedSoulType };
 }

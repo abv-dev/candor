@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.5.7] — 2026-04-22
+
+### Added
+- **Prédiction de la soul** : après le 2ème drake killed, annonce vocale "Soul [élément] en jeu" / "[Element] soul incoming". Élément lu depuis `gameData.mapTerrain` (le rift a révélé l'élément final). Déclenche une seule fois. Toujours zéro invention — source Riot directe.
+
 ## [v0.5.6] — 2026-04-21
 
 ### Fixed
